@@ -34,7 +34,7 @@ function renderBoard() {
             line1.setAttribute('x2', '70');
             line1.setAttribute('y2', '70');
             line1.setAttribute('stroke', 'yellow');
-            line1.setAttribute('stroke-width', '4');
+            line1.setAttribute('stroke-width', '8');
             line1.setAttribute('stroke-linecap', 'round');
             line1.setAttribute('stroke-dasharray', '100');
             line1.setAttribute('stroke-dashoffset', '100');
@@ -43,7 +43,7 @@ function renderBoard() {
             animate1.setAttribute('attributeName', 'stroke-dashoffset');
             animate1.setAttribute('from', '100');
             animate1.setAttribute('to', '0');
-            animate1.setAttribute('dur', '1s');
+            animate1.setAttribute('dur', '0.5s');
             animate1.setAttribute('fill', 'freeze');
             line1.appendChild(animate1);
 
@@ -53,7 +53,7 @@ function renderBoard() {
             line2.setAttribute('x2', '70');
             line2.setAttribute('y2', '10');
             line2.setAttribute('stroke', 'yellow');
-            line2.setAttribute('stroke-width', '4');
+            line2.setAttribute('stroke-width', '8');
             line2.setAttribute('stroke-linecap', 'round');
             line2.setAttribute('stroke-dasharray', '100');
             line2.setAttribute('stroke-dashoffset', '100');
@@ -82,7 +82,7 @@ function renderBoard() {
             circle.setAttribute('cy', '40');
             circle.setAttribute('r', '30');
             circle.setAttribute('stroke', '#00B0EF');
-            circle.setAttribute('stroke-width', '3');
+            circle.setAttribute('stroke-width', '8');
             circle.setAttribute('fill', 'none');
             circle.setAttribute('stroke-dasharray', '188.4');
             circle.setAttribute('stroke-dashoffset', '188.4');
