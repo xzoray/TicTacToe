@@ -43,6 +43,10 @@ main {
     font-weight: bold;
 }
 
+.cell:hover {
+    background: #90898942;
+}
+
 .board > :nth-child(-n+3) { 
     border-top: none;
 }
