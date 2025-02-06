@@ -30,7 +30,7 @@ function renderBoard() {
             renderCircle(cell, true);
         }
 
-        cell.addEventListener('click', handleCellClick, { once: true });
+        cell.addEventListener('click', handleCellClick);
         board.appendChild(cell);
     });
 
@@ -45,6 +45,11 @@ function handleCellClick(event) {
 
     fields[index] = currentPlayer;
     renderSingleCell(cell, currentPlayer);
+
+    // Check for winner
+    if (checkWinner()) {
+        return;
+    }
 
     // Switch player
     currentPlayer = currentPlayer === 'cross' ? 'circle' : 'cross';
@@ -138,3 +143,73 @@ function renderCircle(cell, skipAnimation) {
     circleSvg.appendChild(circle);
     cell.appendChild(circleSvg);
 }
+
+function checkWinner() {
+    const winningCombinations = [
+        [0, 1, 2], // Rows
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6], // Columns
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8], // Diagonals
+        [2, 4, 6]
+    ];
+
+    for (const combination of winningCombinations) {
+        const [a, b, c] = combination;
+
+        if (fields[a] && fields[a] === fields[b] && fields[a] === fields[c]) {
+            drawWinningLine(a, b, c);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function drawWinningLine(a, b, c) {
+    const cells = document.querySelectorAll('.cell');
+
+    [a, b, c].forEach(index => {
+        cells[index].classList.add('winning-cell');
+    });
+
+    animateLine(cells[a], cells[c]); // Animate the winning line
+    content.style.pointerEvents = 'none';
+}
+
+function animateLine(startCell, endCell) {
+    const startX = startCell.offsetLeft + startCell.offsetWidth / 2;
+    const startY = startCell.offsetTop + startCell.offsetHeight / 2;
+    const endX = endCell.offsetLeft + endCell.offsetWidth / 2;
+    const endY = endCell.offsetTop + endCell.offsetHeight / 2;
+
+    const line = document.createElement('div');
+    line.classList.add('line');
+    document.body.appendChild(line);
+
+    const length = Math.hypot(endX - startX, endY - startY);
+    const angle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI);
+
+    line.style.width = `${length}px`;
+    line.style.transform = `rotate(${angle}deg)`;
+    line.style.left = `${startX}px`;
+    line.style.top = `${startY}px`;
+}
+
+// CSS styles for visual effects
+const style = document.createElement('style');
+style.textContent = `
+    .winning-cell {
+        background-color: rgba(0, 255, 0, 0.3); 
+    }
+    .line {
+        position: absolute;
+        height: 5px;
+        background: red;
+        transform-origin: 0 50%;
+        transition: width 0.5s ease-out;
+    }
+`;
+document.head.appendChild(style);
